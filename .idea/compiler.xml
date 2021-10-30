@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="job4j_threads" target="1.5" />
+      <module name="job4j_threads" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
