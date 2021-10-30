@@ -3,11 +3,11 @@ package concurrent;
 public class ThreadState {
     public static void main(String[] args) {
         Thread first = new Thread(
-                () -> {}
+                () -> { }
         );
 
         Thread second = new Thread(
-                () -> {}
+                () -> { }
         );
 
         System.out.println("First thread: " + first.getState());
