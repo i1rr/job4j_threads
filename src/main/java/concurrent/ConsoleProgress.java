@@ -1,18 +1,36 @@
 package concurrent;
 
 public class ConsoleProgress {
+
     private int count = 0;
-    private final String[] shar = {"-",
-            "\\",
-            "|",
-            "/"
-    };
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public synchronized int getCount() {
+        return count;
+    }
+
+    public synchronized void setCount(int count) {
+        this.count = count;
+    }
 
     private String process() {
-        if (count > 3) {
-            count = 0;
-        }
-        return shar[count++];
+         String[] shar = {"-",
+                "\\",
+                "|",
+                "/"
+        };
+
+         if (getCount() > 3) {
+             setCount(0);
+         }
+
+         String rsl = shar[getCount()];
+         increment();
+
+        return rsl;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -29,6 +47,7 @@ public class ConsoleProgress {
                     }
                 }
         );
+
         progress.start();
         Thread.sleep(10000);
         progress.interrupt();

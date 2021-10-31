@@ -29,7 +29,7 @@ public class Wget implements Runnable {
                 long timeSpent = System.currentTimeMillis() - startTime;
                 if (timeSpent < speed) {
                     try {
-                        Thread.sleep(speed - timeSpent / 1000);
+                        Thread.sleep(speed * 1000L - timeSpent);
                     } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
                     }
