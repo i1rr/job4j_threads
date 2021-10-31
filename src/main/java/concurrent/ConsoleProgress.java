@@ -24,7 +24,7 @@ public class ConsoleProgress {
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
-                            break;
+                            Thread.currentThread().interrupt();
                         }
                     }
                 }
