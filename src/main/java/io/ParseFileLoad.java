@@ -10,23 +10,26 @@ public final class ParseFileLoad {
         this.file = file;
     }
 
-    private synchronized String getContent(Predicate<Integer> filter) throws IOException {
-        BufferedInputStream i = new BufferedInputStream(new FileInputStream(file));
+    private synchronized String getContent(Predicate<Integer> filter) {
         StringBuilder output = new StringBuilder();
-        int data;
-        while ((data = i.read()) > 0) {
-            if (filter.test(data)) {
-                output.append((char) data);
+        try (BufferedInputStream i = new BufferedInputStream(new FileInputStream(file))) {
+            int data;
+            while ((data = i.read()) > 0) {
+                if (filter.test(data)) {
+                    output.append((char) data);
+                }
             }
+        } catch (IOException io) {
+            io.printStackTrace();
         }
         return output.toString();
     }
 
-    public synchronized String getContent() throws IOException {
+    public synchronized String getContent() {
         return getContent(i -> i > 0);
     }
 
-    public synchronized String getContentWithoutUnicode() throws IOException {
-        return getContent(i -> i > 0 && i < 128);
+    public synchronized String getContentWithoutUnicode() {
+        return getContent(i -> i >= 0x80);
     }
 }
