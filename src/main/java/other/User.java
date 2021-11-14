@@ -1,15 +1,10 @@
 package other;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import java.util.Objects;
 
-@ThreadSafe
 public final class User {
-    private final int id;
 
-    @GuardedBy("this")
+    private final int id;
     private int balance;
 
     public User(int id, int balance) {
@@ -21,16 +16,16 @@ public final class User {
         return id;
     }
 
-    public synchronized int getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public synchronized void setBalance(int balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
     @Override
-    public synchronized boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -42,7 +37,7 @@ public final class User {
     }
 
     @Override
-    public synchronized int hashCode() {
+    public int hashCode() {
         return Objects.hash(id, balance);
     }
 }
