@@ -3,7 +3,7 @@ package wait;
 public class CountBarrier {
     private final Object monitor = this;
 
-    private int total;
+    private final int total;
 
     private int count = 0;
 
@@ -12,7 +12,7 @@ public class CountBarrier {
     }
 
     public synchronized void count() {
-        total++;
+        count++;
         monitor.notifyAll();
     }
 
