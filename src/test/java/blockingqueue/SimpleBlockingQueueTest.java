@@ -2,27 +2,30 @@ package blockingqueue;
 
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class SimpleBlockingQueueTest {
 
     @Test
     public void whenProduce10taken5() throws InterruptedException {
-        SimpleBlockingQueue<Integer> sbq = new SimpleBlockingQueue<>(7);
+        SimpleBlockingQueue<Integer> sbq = new SimpleBlockingQueue<>(5);
         Thread producer = new Thread(
                 () -> {
-                    for (int i = 0; i < 11; i++) {
+                    for (int i = 0; i < 205; i++) {
                         sbq.offer(i);
+                        System.out.println(">>> Producer: i=" + i);
                     }
+                    System.out.println("Producer thread has finished its process.");
                 }
         );
 
         Thread consumer = new Thread(
                 () -> {
-                    for (int i = 0; i < 6; i++) {
+                    for (int i = 0; i < 200; i++) {
                         sbq.poll();
+                        System.out.println("Consumer: i=" + i + " <<<");
                     }
+                    System.out.println("Consumer thread has finished its process.");
                 }
         );
 
@@ -30,6 +33,6 @@ public class SimpleBlockingQueueTest {
         producer.start();
         consumer.join();
         producer.join();
-        assertThat(sbq.getQueueLength(), is(5));
+        assertFalse(consumer.isAlive() && producer.isAlive());
     }
 }
