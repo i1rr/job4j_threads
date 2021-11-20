@@ -22,7 +22,11 @@ public class SimpleBlockingQueueTest {
         Thread consumer = new Thread(
                 () -> {
                     for (int i = 0; i < 200; i++) {
-                        sbq.poll();
+                        try {
+                            sbq.poll();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         System.out.println("Consumer: i=" + i + " <<<");
                     }
                     System.out.println("Consumer thread has finished its process.");
