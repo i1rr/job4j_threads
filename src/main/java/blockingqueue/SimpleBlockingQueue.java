@@ -17,6 +17,10 @@ public class SimpleBlockingQueue<T> {
         this.limit = boundSize;
     }
 
+    public SimpleBlockingQueue() {
+        this.limit = 44;
+    }
+
     public synchronized void offer(T value) {
         while (queue.size() == limit) {
             try {
