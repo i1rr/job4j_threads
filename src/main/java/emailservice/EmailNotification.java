@@ -3,17 +3,14 @@ package emailservice;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EmailNotification implements Runnable {
-    private static ExecutorService pool =
-            Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+public class EmailNotification {
+    private final ExecutorService pool;
 
-    private final User user;
-
-    public EmailNotification(User user) {
-        this.user = user;
+    public EmailNotification() {
+        this.pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
-    public boolean emailTo(User user) {
+    private boolean emailTo(User user) {
         if (user == null) {
             return false;
         }
@@ -27,7 +24,7 @@ public class EmailNotification implements Runnable {
 
     }
 
-    private void close(User user, ExecutorService pool) {
+    private void close(ExecutorService pool) {
         pool.shutdown();
         while (!pool.isTerminated()) {
             try {
@@ -38,13 +35,11 @@ public class EmailNotification implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        emailTo(user);
-        close(user, pool);
-    }
-
     public static void main(String[] args) {
-        pool.submit(new EmailNotification(new User("Vasilij", "vasja@gmail.com")));
+        EmailNotification en = new EmailNotification();
+        en.pool.submit(() -> {
+            en.emailTo(new User("Vasilij", "vasja@gmail.com"));
+            en.close(en.pool);
+        });
     }
 }
