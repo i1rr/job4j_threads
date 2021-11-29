@@ -1,7 +1,5 @@
 package pools;
 
-import emailservice.User;
-
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
@@ -22,7 +20,7 @@ public class FindingIndex<T> extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         if (from - to < 10) {
-            return simpleFind(from, to);
+            return simpleFind();
         }
         int mid = (from + to) / 2;
 
@@ -43,7 +41,7 @@ public class FindingIndex<T> extends RecursiveTask<Integer> {
         return fjp.invoke(new FindingIndex<>(array, 0, array.length - 1, obj));
     }
 
-    private int simpleFind(int from, int to) {
+    private int simpleFind() {
         for (int i = from; i <= to; i++) {
             if (array[i].equals(obj)) {
                 return i;
