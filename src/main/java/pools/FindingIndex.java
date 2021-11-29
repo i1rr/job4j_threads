@@ -22,7 +22,7 @@ public class FindingIndex<T> extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         if (from - to < 10) {
-            return simpleFind();
+            return simpleFind(from, to);
         }
         int mid = (from + to) / 2;
 
@@ -35,7 +35,7 @@ public class FindingIndex<T> extends RecursiveTask<Integer> {
         int left = leftSort.join();
         int right = rightSort.join();
 
-        return returnRightIndexOrMinusOne(left, right);
+        return Math.max(left, right);
     }
 
     public static <T> Integer find(T[] array, T obj) {
@@ -43,16 +43,12 @@ public class FindingIndex<T> extends RecursiveTask<Integer> {
         return fjp.invoke(new FindingIndex<>(array, 0, array.length - 1, obj));
     }
 
-    private int simpleFind() {
-        for (int i = 0; i < array.length; i++) {
+    private int simpleFind(int from, int to) {
+        for (int i = from; i <= to; i++) {
             if (array[i].equals(obj)) {
                 return i;
             }
         }
         return -1;
-    }
-
-    private int returnRightIndexOrMinusOne(int value1, int value2) {
-        return value1 >= 0 ? value1 : value2;
     }
 }

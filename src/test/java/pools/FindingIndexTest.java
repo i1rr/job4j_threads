@@ -19,4 +19,15 @@ public class FindingIndexTest {
 
         assertThat(FindingIndex.find(arr, vasja2500), is(2500));
     }
+
+    @Test
+    public void whenNoSuchUser() {
+        User[] arr = new User[10000];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = new User("Vasja" + i, "vasja" + i + "@gmail.com");
+        }
+        User vasjaHz = new User("VasjaHz", "vasjaHz@gmail.com");
+
+        assertThat(FindingIndex.find(arr, vasjaHz), is(-1));
+    }
 }
