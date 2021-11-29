@@ -39,7 +39,7 @@ public class EmailNotification {
         EmailNotification en = new EmailNotification();
         en.pool.submit(() -> {
             en.emailTo(new User("Vasilij", "vasja@gmail.com"));
-            en.close(en.pool);
         });
+        en.close(en.pool);
     }
 }
