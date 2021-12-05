@@ -31,7 +31,7 @@ public class RolColSum {
         }
     }
 
-    public static Sums[] sum(int[][] matrix) {
+    public Sums[] sum(int[][] matrix) {
         Sums[] result = new Sums[matrix.length];
         for (int row = 0; row < matrix.length; row++) {
             int rowSum = 0;
@@ -42,16 +42,16 @@ public class RolColSum {
             }
             result[row] = new Sums(rowSum, colSum);
         }
-
         return result;
     }
 
-    public static Sums[] asyncSum(int[][] matrix) {
+    public Sums[] asyncSum(int[][] matrix) {
         Sums[] rsl = new Sums[matrix.length];
 
         for (int i = 0; i < matrix.length; i++) {
             rsl[i] = new Sums(0, 0);
         }
+
                 CompletableFuture<Void> first = CompletableFuture.runAsync(
                         () -> {
                             for (int row = 0; row < matrix.length; row++) {
@@ -65,7 +65,7 @@ public class RolColSum {
                         () -> {
                             for (int row = 0; row < matrix.length; row++) {
                                 for (int cell = 0; cell < matrix[row].length; cell++) {
-                                    rsl[row].rowSum += matrix[row][cell];
+                                   rsl[row].rowSum += matrix[row][cell];
                                 }
                             }
                         });
