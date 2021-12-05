@@ -69,7 +69,7 @@ public class RolColSum {
                                 }
                             }
                         });
-                CompletableFuture.allOf(first, second);
+                CompletableFuture.allOf(first, second).join();
         return rsl;
     }
 }
