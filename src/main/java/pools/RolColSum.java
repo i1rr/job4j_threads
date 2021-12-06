@@ -31,45 +31,37 @@ public class RolColSum {
         }
     }
 
+    private Sums sumRowCell(int[][] matrix, int index) {
+        Sums rsl = new Sums(0, 0);
+        int rowSum = 0;
+        int colSum = 0;
+        for (int cell = 0; cell < matrix[index].length; cell++) {
+            rowSum += matrix[index][cell];
+            colSum += matrix[cell][index];
+        }
+        rsl.rowSum = rowSum;
+        rsl.colSum = colSum;
+        return rsl;
+    }
+
     public Sums[] sum(int[][] matrix) {
         Sums[] result = new Sums[matrix.length];
-        for (int row = 0; row < matrix.length; row++) {
-            int rowSum = 0;
-            int colSum = 0;
-            for (int cell = 0; cell < matrix[row].length; cell++) {
-                rowSum += matrix[row][cell];
-                colSum += matrix[cell][row];
-            }
-            result[row] = new Sums(rowSum, colSum);
+        for (int i = 0; i < matrix.length; i++) {
+            result[i] = sumRowCell(matrix, i);
         }
         return result;
     }
 
     public Sums[] asyncSum(int[][] matrix) {
-        Sums[] rsl = new Sums[matrix.length];
-
-        for (int i = 0; i < matrix.length; i++) {
-            rsl[i] = new Sums(0, 0);
-        }
-
-                CompletableFuture<Void> first = CompletableFuture.runAsync(
-                        () -> {
-                            for (int row = 0; row < matrix.length; row++) {
-                                for (int cell = 0; cell < matrix[row].length; cell++) {
-                                    rsl[row].colSum += matrix[cell][row];
-                                }
-                            }
-                        });
-
-                CompletableFuture<Void> second = CompletableFuture.runAsync(
-                        () -> {
-                            for (int row = 0; row < matrix.length; row++) {
-                                for (int cell = 0; cell < matrix[row].length; cell++) {
-                                   rsl[row].rowSum += matrix[row][cell];
-                                }
-                            }
-                        });
-                CompletableFuture.allOf(first, second).join();
-        return rsl;
+        CompletableFuture<Sums[]> rsl = CompletableFuture.supplyAsync(
+                () -> {
+                    Sums[] temp = new Sums[matrix.length];
+                    for (int i = 0; i < matrix.length; i++) {
+                        temp[i] = sumRowCell(matrix, i);
+                    }
+                    return temp;
+                }
+        );
+        return rsl.join();
     }
 }
