@@ -41,7 +41,7 @@ public class RolColSumTest {
         sumsArr[1] = new RolColSum.Sums(6, 6);
         sumsArr[2] = new RolColSum.Sums(9, 6);
 
-        assertThat(rcs.sum(arr), is (sumsArr));
+        assertThat(rcs.sum(arr), is(sumsArr));
     }
 
     /**
@@ -64,6 +64,6 @@ public class RolColSumTest {
         sumsArr[1] = new RolColSum.Sums(6, 6);
         sumsArr[2] = new RolColSum.Sums(6, 9);
 
-        assertThat(rcs.asyncSum(arr), is (sumsArr));
+        assertThat(rcs.asyncSum(arr), is(sumsArr));
     }
 }
