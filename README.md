@@ -1,6 +1,4 @@
-<strong> Here starts my Java Middle course. </strong>
-
-
+[TASK] Creating a branch out of the IDEA.
 
 Travis CI [![Build Status](https://app.travis-ci.com/i1rr/job4j_threads.svg?branch=main)](https://app.travis-ci.com/i1rr/job4j_threads)
 
