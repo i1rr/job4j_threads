@@ -15,6 +15,5 @@ public class CASMap {
         queue.get(name).add("value");
 
         /* extract */
-        //var text = queue.get(name, emptyQueue()).poll();
     }
 }
