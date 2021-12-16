@@ -25,9 +25,7 @@ public class TopicService implements Service {
                 }
             });
             return new Resp(parameter, "200");
-        }
-
-        if ("GET".equals(requestType)) {
+        } else if ("GET".equals(requestType)) {
             topic.putIfAbsent(parameter, new ConcurrentHashMap<>());
             topic.get(parameter).putIfAbsent(sourceName, new ConcurrentLinkedQueue<>());
             ConcurrentLinkedQueue<String> tt = topic.get(parameter).get(sourceName);
